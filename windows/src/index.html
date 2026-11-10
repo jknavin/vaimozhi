@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>VAIMOZHI</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body data-theme="dark">
+  <div class="bg-orbs" aria-hidden="true"><i></i><i></i><i></i></div>
+
+  <div class="app">
+    <aside class="sidebar glass">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">
+          <svg viewBox="0 0 48 48" width="40" height="40"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6558E8"/><stop offset="1" stop-color="#20C9B7"/></linearGradient></defs><rect width="48" height="48" rx="14" fill="url(#lg)"/><rect x="19" y="10" width="10" height="19" rx="5" fill="#fff"/><path d="M13 24a11 11 0 0 0 22 0M24 35v5" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+        </div>
+        <div>
+          <div class="brand-en">VAIMOZHI</div>
+          <div class="brand-ta">வாய்மொழி</div>
+        </div>
+      </div>
+      <nav id="nav">
+        <button data-view="dashboard" class="active"><span class="ico">◉</span><span data-i18n="nav.dashboard">Dashboard</span></button>
+        <button data-view="editor"><span class="ico">✎</span><span data-i18n="nav.editor">Editor</span></button>
+        <button data-view="history"><span class="ico">☰</span><span data-i18n="nav.history">History</span></button>
+        <button data-view="models"><span class="ico">⬇</span><span data-i18n="nav.models">Models</span></button>
+        <button data-view="settings"><span class="ico">⚙</span><span data-i18n="nav.settings">Settings</span></button>
+      </nav>
+      <div class="side-foot">
+        <div class="tagline">YOUR VOICE.<br>YOUR WORDS.<br>YOUR WORLD.</div>
+        <div class="kbd-hint"><span data-i18n="hint.hotkey">Dictate anywhere:</span> <kbd id="hotkey-hint">Ctrl+Shift+Space</kbd></div>
+      </div>
+    </aside>
+
+    <main class="content">
+      <!-- ============ Dashboard ============ -->
+      <section id="view-dashboard" class="view active">
+        <header class="view-head">
+          <h1 data-i18n="nav.dashboard">Dashboard</h1>
+          <div class="chips">
+            <button class="chip" id="chip-language" title="Language"></button>
+            <button class="chip" id="chip-model" title="Model"></button>
+          </div>
+        </header>
+
+        <div class="hero glass">
+          <button id="mic-btn" class="mic" aria-label="Start recording">
+            <span class="ring r1"></span><span class="ring r2"></span><span class="ring r3"></span>
+            <svg viewBox="0 0 48 48" width="52" height="52"><rect x="18" y="6" width="12" height="23" rx="6" fill="currentColor"/><path d="M11 23a13 13 0 0 0 26 0M24 36v7" stroke="currentColor" stroke-width="3.2" fill="none" stroke-linecap="round"/></svg>
+          </button>
+          <div id="status-line" class="status-line" data-i18n="status.ready">Ready</div>
+          <div class="quick">
+            <label><span data-i18n="set.language">Language</span>
+              <select id="dash-language">
+                <option value="auto" data-i18n="lang.auto">Auto (Tamil + English)</option>
+                <option value="english" data-i18n="lang.english">English</option>
+                <option value="tamil" data-i18n="lang.tamil">Tamil</option>
+              </select>
+            </label>
+            <label><span data-i18n="set.style">Text style</span>
+              <select id="dash-style"></select>
+            </label>
+          </div>
+        </div>
+
+        <div class="grid2">
+          <div class="card glass stat">
+            <div class="stat-num" id="stat-words">0</div>
+            <div class="stat-label" data-i18n="dash.words">words dictated</div>
+          </div>
+          <div class="card glass stat">
+            <div class="stat-num" id="stat-count">0</div>
+            <div class="stat-label" data-i18n="dash.transcripts">transcriptions</div>
+          </div>
+        </div>
+
+        <div class="card glass">
+          <h2 data-i18n="dash.recent">Recent transcriptions</h2>
+          <div id="recent-list" class="list"></div>
+        </div>
+      </section>
+
+      <!-- ============ Editor ============ -->
+      <section id="view-editor" class="view">
+        <header class="view-head"><h1 data-i18n="nav.editor">Editor</h1><div id="editor-meta" class="muted"></div></header>
+        <div class="card glass editor-card">
+          <textarea id="editor-text" spellcheck="true" placeholder="Dictated text appears here. You can edit it freely."></textarea>
+          <div class="toolbar">
+            <button id="ed-undo" class="btn ghost" data-i18n="ed.undo">Undo</button>
+            <button id="ed-redo" class="btn ghost" data-i18n="ed.redo">Redo</button>
+            <span class="sep"></span>
+            <button id="ed-copy" class="btn" data-i18n="ed.copy">Copy</button>
+            <button id="ed-share" class="btn" data-i18n="ed.share">Share</button>
+            <button id="ed-save" class="btn primary" data-i18n="ed.save">Save</button>
+            <button id="ed-delete" class="btn danger" data-i18n="ed.delete">Delete</button>
+          </div>
+          <div class="toolbar">
+            <label class="inline"><span data-i18n="ed.cleanas">Clean as</span>
+              <select id="ed-style"></select>
+            </label>
+            <button id="ed-clean" class="btn" data-i18n="ed.clean">Clean text</button>
+            <span class="sep"></span>
+            <label class="inline"><span data-i18n="ed.language">Language</span>
+              <select id="ed-language">
+                <option value="auto" data-i18n="lang.auto">Auto (Tamil + English)</option>
+                <option value="english" data-i18n="lang.english">English</option>
+                <option value="tamil" data-i18n="lang.tamil">Tamil</option>
+              </select>
+            </label>
+            <button id="ed-retry" class="btn" data-i18n="ed.retry">Retry transcription</button>
+          </div>
+          <p class="muted small" id="retry-note"></p>
+        </div>
+      </section>
+
+      <!-- ============ History ============ -->
+      <section id="view-history" class="view">
+        <header class="view-head"><h1 data-i18n="nav.history">History</h1></header>
+        <div class="card glass filters">
+          <input id="h-search" type="search" placeholder="Search transcriptions…" data-i18n-ph="hist.search" />
+          <label class="inline"><span data-i18n="hist.from">From</span><input id="h-from" type="date" /></label>
+          <label class="inline"><span data-i18n="hist.to">To</span><input id="h-to" type="date" /></label>
+          <label class="inline check"><input id="h-fav" type="checkbox" /><span data-i18n="hist.favs">Favourites only</span></label>
+        </div>
+        <div id="history-list" class="list big"></div>
+      </section>
+
+      <!-- ============ Models ============ -->
+      <section id="view-models" class="view">
+        <header class="view-head"><h1 data-i18n="nav.models">Models</h1></header>
+        <div class="card glass" id="device-card"></div>
+        <p class="muted small" data-i18n="models.intro">Models run entirely on this PC. Nothing is downloaded until you press Download. Bigger models understand Tamil much better but need more RAM and time.</p>
+        <div id="model-list" class="list big"></div>
+      </section>
+
+      <!-- ============ Settings ============ -->
+      <section id="view-settings" class="view">
+        <header class="view-head"><h1 data-i18n="nav.settings">Settings</h1><div id="save-state" class="muted small"></div></header>
+
+        <div class="card glass">
+          <h2 data-i18n="set.recognition">Recognition</h2>
+          <div class="form">
+            <label><span data-i18n="set.language">Language</span>
+              <select id="s-language">
+                <option value="auto" data-i18n="lang.auto">Auto (Tamil + English)</option>
+                <option value="english" data-i18n="lang.english">English</option>
+                <option value="tamil" data-i18n="lang.tamil">Tamil</option>
+              </select>
+              <small id="s-language-help" class="muted"></small>
+            </label>
+            <label><span data-i18n="set.model">Active model</span><select id="s-model"></select></label>
+            <label class="check"><input type="checkbox" id="s-beam" /><span data-i18n="set.beam">More accurate decoding (slower)</span></label>
+            <label><span data-i18n="set.threads">CPU threads (0 = automatic)</span><input type="number" id="s-threads" min="0" max="32" /></label>
+          </div>
+        </div>
+
+        <div class="card glass">
+          <h2 data-i18n="set.output">Output formatting</h2>
+          <div class="form">
+            <label><span data-i18n="set.style">Text style</span><select id="s-style"></select><small class="muted" data-i18n="set.style.help">Cleanup is rule-based and offline. It never adds words or changes names.</small></label>
+            <label class="check"><input type="checkbox" id="s-fillers" /><span data-i18n="set.fillers">Remove filler sounds (um, uh, hmm)</span></label>
+            <label class="check"><input type="checkbox" id="s-numbers" /><span data-i18n="set.numbers">Convert spoken English numbers to digits</span></label>
+            <label><span data-i18n="set.insert">How to insert text</span>
+              <select id="s-insert">
+                <option value="paste">Paste with Ctrl+V (recommended)</option>
+                <option value="type">Type the characters (clipboard untouched)</option>
+                <option value="copy">Only copy to clipboard</option>
+              </select>
+            </label>
+            <label class="check"><input type="checkbox" id="s-restore" /><span data-i18n="set.restore">Restore my previous clipboard after pasting</span></label>
+          </div>
+        </div>
+
+        <div class="card glass">
+          <h2 data-i18n="set.mic">Microphone</h2>
+          <div class="form">
+            <label><span data-i18n="set.device">Input device</span><select id="s-mic"></select></label>
+            <div class="row">
+              <button class="btn" id="mic-test" data-i18n="set.mictest">Test microphone</button>
+              <span id="mic-test-result" class="muted small"></span>
+            </div>
+            <p class="muted small" data-i18n="set.micperm">VAIMOZHI only opens the microphone while you record. Windows controls access under Settings → Privacy → Microphone.</p>
+          </div>
+        </div>
+
+        <div class="card glass">
+          <h2 data-i18n="set.shortcut">Shortcut</h2>
+          <div class="form">
+            <label><span data-i18n="set.shortcut.key">Global shortcut</span>
+              <input id="s-shortcut" readonly placeholder="Click, then press the keys" />
+              <small class="muted" data-i18n="set.shortcut.help">Click the box and press a combination such as Ctrl+Shift+Space. Needs at least one modifier key.</small>
+            </label>
+            <label><span data-i18n="set.hotmode">Mode</span>
+              <select id="s-hotmode">
+                <option value="toggle">Press to start, press again to stop</option>
+                <option value="push">Push-to-talk (hold while speaking)</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <div class="card glass">
+          <h2 data-i18n="set.privacy">Privacy</h2>
+          <div class="form">
+            <label class="check"><input type="checkbox" id="s-history" /><span data-i18n="set.history">Save transcriptions to history</span></label>
+            <label class="check"><input type="checkbox" id="s-keepaudio" /><span data-i18n="set.keepaudio">Keep audio so I can retry a transcription (stored only on this PC)</span></label>
+            <p class="muted small" data-i18n="set.privacy.text">Audio is processed on this PC. No account, no analytics, no uploads. The only network use is a model download that you start yourself.</p>
+            <div class="row"><button class="btn danger" id="clear-history" data-i18n="set.clear">Delete all history and stored audio</button></div>
+          </div>
+        </div>
+
+        <div class="card glass">
+          <h2 data-i18n="set.storage">Storage</h2>
+          <div id="storage-info" class="muted small"></div>
+        </div>
+
+        <div class="card glass">
+          <h2 data-i18n="set.appearance">Appearance &amp; startup</h2>
+          <div class="form">
+            <label><span data-i18n="set.theme">Theme</span>
+              <select id="s-theme"><option value="dark">Dark</option><option value="light">Light</option><option value="system">Follow Windows</option></select>
+            </label>
+            <label><span data-i18n="set.uilang">Interface language</span>
+              <select id="s-uilang"><option value="en">English</option><option value="ta">தமிழ்</option></select>
+            </label>
+            <label class="check"><input type="checkbox" id="s-autostart" /><span data-i18n="set.autostart">Start with Windows</span></label>
+            <label class="check"><input type="checkbox" id="s-hidden" /><span data-i18n="set.starthidden">Start minimised to the tray</span></label>
+            <label class="check"><input type="checkbox" id="s-tray" /><span data-i18n="set.tray">Closing the window keeps VAIMOZHI running in the tray</span></label>
+            <label class="check"><input type="checkbox" id="s-overlay" /><span data-i18n="set.overlay">Show the floating microphone while dictating</span></label>
+            <label><span data-i18n="set.unload">Free model memory after idle minutes (0 = never)</span><input type="number" id="s-unload" min="0" max="240" /></label>
+          </div>
+        </div>
+
+        <div class="card glass">
+          <h2 data-i18n="set.about">About</h2>
+          <div class="muted small" id="about-info"></div>
+          <div class="row"><button class="btn" id="check-updates" data-i18n="set.updates">Check for updates</button></div>
+        </div>
+
+        <div class="savebar glass"><button class="btn primary" id="save-settings" data-i18n="set.save">Save settings</button></div>
+      </section>
+    </main>
+  </div>
+
+  <!-- ============ Recording screen ============ -->
+  <div id="rec-modal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-card glass">
+      <div id="rec-state" class="rec-state">Recording</div>
+      <canvas id="wave" width="640" height="140"></canvas>
+      <div id="rec-timer" class="rec-timer">00:00</div>
+      <div id="rec-progress" class="progress hidden"><i></i></div>
+      <div class="rec-actions" id="rec-actions">
+        <button class="btn" id="rec-pause" data-i18n="rec.pause">Pause</button>
+        <button class="btn primary" id="rec-stop" data-i18n="rec.stop">Stop</button>
+        <button class="btn danger" id="rec-cancel" data-i18n="rec.cancel">Cancel</button>
+      </div>
+      <p class="muted small" data-i18n="rec.note">Text appears when you stop: Whisper transcribes after recording, not live.</p>
+    </div>
+  </div>
+
+  <div id="toasts" aria-live="polite"></div>
+  <div id="print-area"></div>
+
+  <script src="config.js"></script>
+  <script src="i18n.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

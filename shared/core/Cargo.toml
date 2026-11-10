@@ -1,0 +1,9 @@
+[package]
+name = "vaimozhi-core"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+description = "Platform-independent language, transliteration, cleanup and model-catalog logic shared by VAIMOZHI apps"
+
+# Deliberately dependency-free so it builds and tests anywhere (and can be reused over JNI on Android in Phase 2).
+[dependencies]
