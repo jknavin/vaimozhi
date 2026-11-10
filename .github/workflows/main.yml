@@ -1,0 +1,36 @@
+name: Build Windows installer
+on:
+  workflow_dispatch:
+  push:
+    tags: ["v*"]
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: ". -> target"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      # whisper-rs compiles whisper.cpp, which needs CMake and LLVM (libclang) for bindgen.
+      - name: Install CMake and LLVM
+        run: choco install -y cmake llvm --installargs 'ADD_CMAKE_TO_PATH=System'
+      - name: Test shared core
+        run: cargo test -p vaimozhi-core
+      - name: Test Windows backend logic
+        run: cargo test -p vaimozhi
+      - name: Install Tauri CLI
+        working-directory: windows
+        run: npm install
+      - name: Build installers
+        working-directory: windows
+        run: npx tauri build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vaimozhi-windows
+          path: |
+            target/release/bundle/nsis/*.exe
+            target/release/bundle/msi/*.msi
